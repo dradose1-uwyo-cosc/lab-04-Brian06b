@@ -1,116 +1,34 @@
 # Brian Barrios Montiel
 # UWYO COSC 1010
-# 10/01/24
-# Lab 03 
+# 11/19/24
+# HW5 
 # Lab Section: 11
 # Sources, people worked with, help given to: 
-# your
-# comments
-# here
+#What does it mean when I get an error code of m = ABSOLUTE_RE.match(range_string) and expected string or bytes-like object, got 'types.GenericAlias'?
+#https://prohama.com/strawberry-1-pattern/ 
+
+import openpyxl
+from openpyxl.utils import get_column_letter 
+from openpyxl.styles import Color, PatternFill
+
+Colors = {"FFFF0000":['C11','C12','C13','C14','C15','D9','D10','D11','D14','D15','D16','D17','E9','E10','E11','E14','E17','E19','F11','F12','F19','F20','F21','G12','G13','G19','G20','H12','H13','H14','H17','H18','H19','H20','H23','I11','I12','I13','I14','I15','I16','I17','I18','I19','I20','I21','I22','I23','J11','J12','J13','J14','J15','J16','J18','J19','J20','J21','J22','J23','J24','K12','K15','K16','K17','K19','K22','K23','K24','L12','L15','L16','L17','L19','L22','L23','L24','M11','M12','M13','M14','M15','M16','M18','M19','M20','M21','M22','M23','M24','N11','N12','N13','N14','N15','N16','N17','N18','N19','N20','N21','N22','N23','O12','O13','O14','O17','O18','O19','O20','O23','P12','P13','P19','P20','Q11','Q12','Q13','Q19','Q20','Q21','R9','R10','R11','R14','R17','R19','S9','S10','S11','S14','S15','S16','S17','T11','T12','T13','T14','T15',],"FF00FF00":['E6','E7','F6','F7','G5','G6','G8','G9','G10','H5','H6','H7','H8','H9','H10','I5','I6','I7','I8','I9','J6','J7','K3','K4','K5','K6','K7','K8','K9','K10','L3','L4','L5','L6','L7','L8','L9','L10','M6','M7','N5','N6','N7','N8','N9','O5','O6','O7','O8','O10','P5','P6','P8','P9','P10','Q6','Q7','R6','R7'],"FF000000":['B11','B12','B13','B14','B15','C9','C10','C16','C17','D6','D7','D8','D18','D19','E5','E8','E15','E16','E20','E21','F5','F8','F9','F10','F14','F15','F16','F17','F22','G4','G7','G11','G14','G16','G17','G23','H4','H11','H15','H16','H24','I4','I10','I24','J3','J4','J5','J8','J9','J10','J25','K2','K11','K25','L2','L11','L25','M3','M4','M5','M8','M9','M10','M25','N4','N10','N24','O4','O9','O11','O15','O16','O24','P4','P7','P11','P14','P16','P17','P23','Q5','Q8','Q9','Q10','Q14','Q15','Q16','Q17','Q22','R5','R8','R15','R16','R20','R21','S6','S7','S8','S18','S19','T9','T10','T16','T17','U11','U12','U13','U14','U15','U16','U17',],"FF800080":['J17','K18','L18','M17'],"FFFFC0CB":['E18','F18','G18','P18','Q18','R18'],"FFFFFFFF":['D12','D13','E12','E13','G21','G22','H21','H22','G15','K13','K14','K20','K21','L13','L14','L20','L21','O21','O22','P15','P21','P22','R12','R13','S12','S13']}
+wb = openpyxl.Workbook()
+sheet = wb.active
+import string
+for chr in string.ascii_uppercase[:22]:
+    sheet.column_dimensions[chr].width = 5
+for i in range (1,26):
+    sheet.row_dimensions[i].height= 13
+coord = chr+str(i)
 
 
 
-# This is your second lab section. It will primarily be about working with lists
-# Complete all sections of this assignment 
-max_temps = [
-    32, 24, 22, 25, 37, 33, 34, 40, 40, 42,
-    35, 35, 47, 49, 37, 37, 35, 23, 26, 25,
-    21, 26, 24, 23, 21, 26, 30, 30, 7, -2,
-    18, 35, 35, 41, 37, 50, 31, 33, 36, 21,
-    34, 50, 36, 47, 32, 13, 14, 38, 46, 35,
-    40, 47, 26, 28, 32, 42, 48, 40, 32, 28,
-    35, 35, 39, 38, 34, 32, 31, 37, 49, 45,
-    39, 46, 50, 53, 32, 28, 34, 43, 40, 42,
-    37, 39, 39, 28, 30, 22, 43, 54, 55, 35,
-    49, 53, 42, 24, 28, 36, 54, 56, 57, 66,
-    71, 71, 63, 33, 38, 56, 62, 62, 40, 39,
-    37, 37, 49, 57, 48, 58, 58, 50, 65, 66,
-    70, 67, 71, 64, 62, 58, 59, 61, 67, 61,
-    52, 48, 52, 58, 61, 69, 70, 63, 60, 70,
-    71, 75, 74, 67, 74, 72, 75, 71, 74, 77,
-    77, 67, 60, 60, 58, 67, 73, 69, 65, 68,
-    67, 63, 61, 62, 69, 62, 61, 66, 75, 81,
-    79, 76, 74, 80, 73, 77, 84, 83, 83, 77,
-    63, 76, 79, 84, 73, 67, 69, 69, 73, 78,
-    83, 85, 85, 85, 81, 81, 86, 93, 86, 82,
-    74, 79, 85, 87, 89, 87, 86, 88, 85, 85,
-    88, 88, 81, 77, 79, 79, 77, 71, 73, 73,
-    76, 83, 84, 83, 68, 77, 88, 89, 89, 86,
-    85, 87, 90, 85, 85, 80, 59, 72, 77, 73,
-    77, 86, 85, 87, 81, 80, 76, 68, 80, 78,
-    82, 78, 67, 66, 72, 75, 55, 64, 72, 77,
-    75, 70, 72, 71, 70, 62, 71, 75, 79, 79,
-    80, 76, 80, 77, 71, 55, 58, 61, 56, 67,
-    70, 69, 68, 67, 42, 43, 51, 59, 69, 74,
-    65, 72, 77, 75, 69, 71, 63, 67, 63, 54,
-    32, 26, 42, 52, 58, 57, 59, 62, 64, 59,
-    50, 41, 41, 50, 51, 57, 63, 60, 61, 55,
-    56, 55, 47, 36, 50, 59, 36, 20, 24, 32,
-    38, 48, 50, 34, 37, 32, 36, 48, 52, 57,
-    48, 34, 29, 39, 44, 39, 33, 40, 44, 55,
-    51, 55, 55, 54, 53, 51, 43, 23, 20, 30,
-    35, 32, 41, 48, 44
-]
 
 
-min_temps = [
-    23, 14, 7, 11, 13, 22, 15, 21, 23, 31,
-    19, 12, 18, 30, 23, 20, 15, 2, 7, -2,
-    2, 3, -2, -8, 5, 8, 16, 1, -8, -26, -26,
-    11, 5, 16, 22, 25, 15, 11, 16, 2, -4, 
-    13, 15, 13, 11, -4, -16, -1, 18, 16, 26,
-    21, -21, -23, 2, 11, 23, 22, 14, 8, 7,
-    15, 9, 16, 9, 14, 19, 17, 22, 21, 13,
-    28, 28, 32, 8, -1, 3, 5, 24, 19, 20,
-    20, 20, 14, 9, 8, 8, 21, 19, 20, 21,
-    25, 22, 3, 2, 10, 13, 24, 26, 26, 33,
-    35, 32, 25, 19, 22, 28, 31, 20, 18, 18,
-    14, 15, 20, 34, 25, 29, 24, 30, 31, 29,
-    40, 34, 34, 31, 28, 30, 31, 30, 38, 41,
-    40, 39, 42, 38, 39, 36, 44, 41, 36, 36,
-    37, 40, 42, 41, 44, 41, 36, 37, 38, 38,
-    45, 45, 45, 49, 46, 41, 43, 43, 44, 44,
-    41, 47, 46, 42, 46, 46, 40, 45, 48, 50,
-    39, 51, 48, 42, 38, 44, 45, 44, 48, 43,
-    42, 49, 45, 49, 49, 47, 42, 48, 46, 49,
-    47, 48, 52, 49, 46, 48, 47, 56, 57, 48,
-    43, 47, 52, 54, 52, 53, 50, 54, 50, 52,
-    53, 55, 54, 51, 50, 47, 41, 41, 46, 43,
-    48, 51, 53, 43, 35, 40, 50, 51, 58, 56,
-    58, 50, 54, 48, 57, 51, 50, 49, 46, 43,
-    52, 49, 49, 48, 50, 49, 45, 40, 44, 39,
-    41, 47, 40, 34, 37, 45, 37, 33, 34, 40,
-    45, 40, 41, 40, 37, 32, 31, 31, 35, 39,
-    38, 38, 41, 32, 35, 30, 30, 30, 25, 29,
-    30, 34, 40, 29, 29, 24, 28, 32, 39, 36,
-    36, 39, 32, 36, 33, 31, 31, 20, 16, 19,
-    3, 2, 14, 29, 29, 42, 33, 34, 29, 35,
-    16, 15, 14, 23, 27, 19, 36, 30, 28, 26,
-    25, 25, 22, 18, 17, 20, 9, 2, 7, 7,
-    18, 16, 17, 13, 17, 21, 31, 30, 27, 23,
-    17, 12, 18, 25, 24, 24, 14, 10, 20, 19,
-    17, 28, 23, 25, 23, 23, -3, -15, 19, 5,
-    -1, -1, 11, 13
-]
-total_max = 0
-total_min = 0
-for max_temp in max_temps:
-    total_max = max_temp + total_max
-for min_temp in min_temps:
-    total_min = min_temp + total_min
-average_max = total_max / len(max_temps)
-average_min = total_min / len(min_temps)
-print(f"Average Maximum Temperature: {average_max}")
-print(f"Average Minimum Temperature: {average_min}")
-# The above two lists are datasets for the maximum and minimum temperatures for Laramie in 2023.
-# Each of these lists has the same length, indicating that they both have the same index positions.
-# Write a single for loop to calculate both the average maximum temperature and the average minimum temperature.
-# You cannot use any pre-existing functions (like mean()) and must perform the calculations manually.
-# Output the results of both calculations.
+for color, cell_list in Colors.items():
+    colored_filled = PatternFill(patternType="solid",fgColor=color)
+    for cell in cell_list:
+        sheet[cell].fill = colored_filled
 
-# For the next part, determine the highest and lowest recorded temperatures.
-# HINT: You can find this information without using any logic or looping.
-minimum_temp = min(min_temps)
-maximum_temp = max(max_temps)
-print(f"Minimum Temperature: {minimum_temp}")
-print(f"Maximum Temperature: {maximum_temp}")
+wb.save("strawberry.xlsx")
+
