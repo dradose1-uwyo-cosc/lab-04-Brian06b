@@ -1,26 +1,19 @@
 # Brian Barrios Montiel
-# UWYO COSC 1010
-# 11/19/24
-# HW5 
-# Lab Section: 11
-# Sources, people worked with, help given to: 
-#What does it mean when I get an error code of m = ABSOLUTE_RE.match(range_string) and expected string or bytes-like object, got 'types.GenericAlias'?
-#https://prohama.com/strawberry-1-pattern/ 
+
 
 import openpyxl
 from openpyxl.utils import get_column_letter 
 from openpyxl.styles import Color, PatternFill
 
-Colors = {"FFFF0000":['C11','C12','C13','C14','C15','D9','D10','D11','D14','D15','D16','D17','E9','E10','E11','E14','E17','E19','F11','F12','F19','F20','F21','G12','G13','G19','G20','H12','H13','H14','H17','H18','H19','H20','H23','I11','I12','I13','I14','I15','I16','I17','I18','I19','I20','I21','I22','I23','J11','J12','J13','J14','J15','J16','J18','J19','J20','J21','J22','J23','J24','K12','K15','K16','K17','K19','K22','K23','K24','L12','L15','L16','L17','L19','L22','L23','L24','M11','M12','M13','M14','M15','M16','M18','M19','M20','M21','M22','M23','M24','N11','N12','N13','N14','N15','N16','N17','N18','N19','N20','N21','N22','N23','O12','O13','O14','O17','O18','O19','O20','O23','P12','P13','P19','P20','Q11','Q12','Q13','Q19','Q20','Q21','R9','R10','R11','R14','R17','R19','S9','S10','S11','S14','S15','S16','S17','T11','T12','T13','T14','T15',],"FF00FF00":['E6','E7','F6','F7','G5','G6','G8','G9','G10','H5','H6','H7','H8','H9','H10','I5','I6','I7','I8','I9','J6','J7','K3','K4','K5','K6','K7','K8','K9','K10','L3','L4','L5','L6','L7','L8','L9','L10','M6','M7','N5','N6','N7','N8','N9','O5','O6','O7','O8','O10','P5','P6','P8','P9','P10','Q6','Q7','R6','R7'],"FF000000":['B11','B12','B13','B14','B15','C9','C10','C16','C17','D6','D7','D8','D18','D19','E5','E8','E15','E16','E20','E21','F5','F8','F9','F10','F14','F15','F16','F17','F22','G4','G7','G11','G14','G16','G17','G23','H4','H11','H15','H16','H24','I4','I10','I24','J3','J4','J5','J8','J9','J10','J25','K2','K11','K25','L2','L11','L25','M3','M4','M5','M8','M9','M10','M25','N4','N10','N24','O4','O9','O11','O15','O16','O24','P4','P7','P11','P14','P16','P17','P23','Q5','Q8','Q9','Q10','Q14','Q15','Q16','Q17','Q22','R5','R8','R15','R16','R20','R21','S6','S7','S8','S18','S19','T9','T10','T16','T17','U11','U12','U13','U14','U15','U16','U17',],"FF800080":['J17','K18','L18','M17'],"FFFFC0CB":['E18','F18','G18','P18','Q18','R18'],"FFFFFFFF":['D12','D13','E12','E13','G21','G22','H21','H22','G15','K13','K14','K20','K21','L13','L14','L20','L21','O21','O22','P15','P21','P22','R12','R13','S12','S13']}
+Colors = {"FF000000":['B6','B7','B8','B9','B10','B11','B12','B13','B14','B15','C5','C16','D4','D5','D16','E4','E5','E16','F5','F9','F10','F11','F12','F16','G5','G8','G13','G16','H5','H7','H10','H11','H14','H16','I5','I7','I9','I12','I14','I16','J5','J7','J9','J12','J14','J16','K5','K7','K10','K11','K14','K16','L5','L8','L13','L16','M5','M9','M10','M11','M12','M16','N5','N16','O5','O16','P5','Q6','Q7','Q8','Q9','Q10','Q11','Q12','Q13','Q14','Q15','W7','W8','W9','W10','W11','W12','W13','W14','W15','W16','X6','X7','X8','X9','X10','X12','X13','X14','X15','X16','Y5','Y6','Y7','Y8','Y9','Y13','Y14','Y15','Y16','Z5','Z6','Z7','Z8','AA5','AA6','AA7','AA8','AA9','AA13','AA14','AA15','AA16','AB6','AB7','AB8','AB9','AB10','AB12','AB13','AB14','AB15','AB16','AC7','AC8','AC9','AC10','AC11','AC12','AC13','AC14','AC15','AC16'],"FF434343":['C8','D8','E8','F6','F7','F8','M8','N8','O8','P8','U15','U16','V6','V7','V8','W6','AD11','AD12','AD13','AD14','AD15','AD16','AE7','AE8','AE9','AE10','AE11','AE12','AE13'],"FFB7B7B7":['C6','C7','C9','C10','C11','C12','C13','C14','C15','D6','E6','G6','H6','I6','J6','K6','L6','M6','N6','O6','P6','AC5','AC6'],"FF999999":['D9','D10','D11','D12','D13','D14','D15','E9','E10','E11','E12','E13','E14','E15','F13','F14','F15','G7','G14','G15','H15','I15','J15','K15','L14','L15','M13','M14','M15','N9','N10','N11','N12','N13','N14','N15','O9','O10','O11','O12','O13','O14','O15','P9','P10','P11','P12','P13','P14','P15','AE14','AE15','AE16'],"FFF3E2F3":['D7','E7'],"FF46BDC6":['I10','I11','J10','J11'],"FF666666":['L7','M7','N7','O7','P7','U7','U8','U9','U10','U11','U12','U13','U14','V9','V10','V11','V12','V13','V14','V15','V16','W5','X4','X5','Y4','Z4','Z13','Z14','Z15','Z16','AA3','AA4','AB4','AB5','AD6','AD7','AD8','AD9','AD10'],"FFD9D9D9":['Y3','Z3','AC5','AC6'],"FFFF0000":['X11','Y10','Y12','Z9','AA10','AA12','AB11'],"FFFF9900":['Y11','Z11','Z12','AA11'],"FFFFFF00":['Z10']}
 wb = openpyxl.Workbook()
 sheet = wb.active
 import string
-for chr in string.ascii_uppercase[:22]:
-    sheet.column_dimensions[chr].width = 5
-for i in range (1,26):
-    sheet.row_dimensions[i].height= 13
+for chr in string.ascii_uppercase[:31]:
+    sheet.column_dimensions[chr].width = 3
+for i in range (1,17):
+    sheet.row_dimensions[i].height= 16
 coord = chr+str(i)
-
 
 
 
@@ -30,5 +23,5 @@ for color, cell_list in Colors.items():
     for cell in cell_list:
         sheet[cell].fill = colored_filled
 
-wb.save("strawberry.xlsx")
+wb.save("Honorsproject.xlsx")
 
