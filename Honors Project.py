@@ -9,15 +9,12 @@ Colors = {"FF000000":['B6','B7','B8','B9','B10','B11','B12','B13','B14','B15','C
 wb = openpyxl.Workbook()
 sheet = wb.active
 import string
-for chr in string.ascii_uppercase[:31]:
-    sheet.column_dimensions[chr].width = 3
-for i in range (1,17):
-    sheet.row_dimensions[i].height= 16
-coord = chr+str(i)
 
-
-
-
+for col_num in range(1,100):
+    column_letter = get_column_letter(col_num)
+    sheet.column_dimensions[column_letter].width = 3
+for row_num in range (1,17):
+    sheet.row_dimensions[row_num].height = 16
 for color, cell_list in Colors.items():
     colored_filled = PatternFill(patternType="solid",fgColor=color)
     for cell in cell_list:
